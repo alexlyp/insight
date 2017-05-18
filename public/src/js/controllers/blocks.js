@@ -32,23 +32,28 @@ angular.module('insight.blocks').controller('BlocksController',
   });
 
   function setTooltip(btn, message) {
-    btn.attr('data-toggle', 'tooltip'); 
-    btn.attr('title', message);
+
+    $(btn).tooltip('hide')
+      .attr('data-original-title', message)
+      .tooltip('show');
   }
 
   function hideTooltip(btn) {
     setTimeout(function() {
-      btn.attr('data-toggle', ''); 
+      $(btn).tooltip('hide');
     }, 1000);
   }
 
   $scope.onSuccess = function(e) {
-      //setTooltip(e.trigger, 'Copied!');
-      //hideTooltip(e.trigger);
+    debugger;
+      console.log(typeof e.trigger);
+      setTooltip(e.trigger, 'Copied!');
+      hideTooltip(e.trigger);
       console.info('Action:', e.action);
       console.info('Text:', e.text);
       console.info('Trigger:', e.trigger);
 
+    debugger;
       e.clearSelection();
   };
 
@@ -58,7 +63,7 @@ angular.module('insight.blocks').controller('BlocksController',
       console.error('Action:', e.action);
       console.error('Trigger:', e.trigger);
   };
-
+  
   $scope.openCalendar = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
